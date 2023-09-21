@@ -1,9 +1,9 @@
 /* @flow */
 
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import './styles.css';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import "./styles.css";
 
 export default class Option extends Component {
   static propTypes = {
@@ -15,11 +15,12 @@ export default class Option extends Component {
     active: PropTypes.bool,
     disabled: PropTypes.bool,
     title: PropTypes.string,
+    Icon: PropTypes.any,
   };
 
   static defaultProps = {
-    activeClassName: '',
-  }
+    activeClassName: "",
+  };
 
   onClick: Function = () => {
     const { disabled, onClick, value } = this.props;
@@ -29,22 +30,26 @@ export default class Option extends Component {
   };
 
   render() {
-    const { children, className, activeClassName, active, disabled, title } = this.props;
+    const {
+      children,
+      className,
+      activeClassName,
+      active,
+      disabled,
+      title,
+      Icon,
+    } = this.props;
     return (
       <div
-        className={classNames(
-          'rdw-option-wrapper',
-          className,
-          {
-            [`rdw-option-active ${activeClassName}`]: active,
-            'rdw-option-disabled': disabled,
-          },
-        )}
+        className={classNames("rdw-option-wrapper", className, {
+          [`rdw-option-active ${activeClassName}`]: active,
+          "rdw-option-disabled": disabled,
+        })}
         onClick={this.onClick}
         aria-selected={active}
         title={title}
       >
-        {children}
+        {React.isValidElement(Icon) ? Icon : children}
       </div>
     );
   }

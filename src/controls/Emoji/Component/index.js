@@ -1,12 +1,12 @@
 /* @flow */
 
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import classNames from "classnames";
 
-import { stopPropagation } from '../../../utils/common';
-import Option from '../../../components/Option';
-import './styles.css';
+import { stopPropagation } from "../../../utils/common";
+import Option from "../../../components/Option";
+import "./styles.css";
 
 class LayoutComponent extends Component {
   static propTypes: Object = {
@@ -23,20 +23,24 @@ class LayoutComponent extends Component {
   };
 
   renderEmojiModal(): Object {
-    const { config: { popupClassName, emojis } } = this.props;
+    const {
+      config: { popupClassName, emojis },
+    } = this.props;
     return (
       <div
-        className={classNames('rdw-emoji-modal', popupClassName)}
+        className={classNames("rdw-emoji-modal", popupClassName)}
         onClick={stopPropagation}
       >
-        {
-          emojis.map((emoji, index) => (<span
+        {emojis.map((emoji, index) => (
+          <span
             key={index}
             className="rdw-emoji-icon"
             alt=""
             onClick={this.onChange}
-          >{emoji}</span>))
-        }
+          >
+            {emoji}
+          </span>
+        ))}
       </div>
     );
   }
@@ -54,17 +58,15 @@ class LayoutComponent extends Component {
         aria-haspopup="true"
         aria-label="rdw-emoji-control"
         aria-expanded={expanded}
-        title={title || translations['components.controls.emoji.emoji']}
+        title={title || translations["components.controls.emoji.emoji"]}
       >
         <Option
           className={classNames(className)}
           value="unordered-list-item"
           onClick={onExpandEvent}
+          Icon={icon}
         >
-          <img
-            src={icon}
-            alt=""
-          />
+          <img src={icon} alt="" />
         </Option>
         {expanded ? this.renderEmojiModal() : undefined}
       </div>
