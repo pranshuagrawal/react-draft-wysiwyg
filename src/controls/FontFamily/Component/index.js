@@ -37,6 +37,7 @@ class LayoutComponent extends Component {
 
   render() {
     const { defaultFontFamily } = this.state;
+    console.log("defaultFontFamily:", defaultFontFamily);
     const {
       config: { className, dropdownClassName, options, title },
       translations,
@@ -62,6 +63,7 @@ class LayoutComponent extends Component {
     const currentFontFamilyName = (
       (options || []).find((opt) => opt.value === currentFontFamily) || {}
     ).label;
+    console.log("currentFontFamilyName:", currentFontFamilyName);
 
     return (
       <div
@@ -84,9 +86,7 @@ class LayoutComponent extends Component {
           }
         >
           <span className="rdw-fontfamily-placeholder">
-            {currentFontFamilyName ||
-              currentFontFamily ||
-              translations["components.controls.fontfamily.fontfamily"]}
+            {currentFontFamilyName || currentFontFamily || "Segoe UI"}
           </span>
           {options.map((family, index) => (
             <DropdownOption
