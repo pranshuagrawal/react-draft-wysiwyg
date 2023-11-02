@@ -37,7 +37,6 @@ class LayoutComponent extends Component {
 
   render() {
     const { defaultFontFamily } = this.state;
-    console.log("defaultFontFamily:", defaultFontFamily);
     const {
       config: { className, dropdownClassName, options, title },
       translations,
@@ -63,7 +62,6 @@ class LayoutComponent extends Component {
     const currentFontFamilyName = (
       (options || []).find((opt) => opt.value === currentFontFamily) || {}
     ).label;
-    console.log("currentFontFamilyName:", currentFontFamilyName);
 
     return (
       <div

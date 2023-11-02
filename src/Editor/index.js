@@ -56,9 +56,9 @@ class WysiwygEditor extends Component {
       props.customBlockRenderFunc
     );
     this.editorProps = this.filterEditorProps(props);
-    this.customStyleMap = this.getStyleMap(props);
     this.compositeDecorator = this.getCompositeDecorator(toolbar);
     const editorState = this.createEditorState(this.compositeDecorator);
+    this.customStyleMap = this.getStyleMap(props, editorState);
     extractInlineStyle(editorState);
     this.state = {
       editorState,
@@ -112,7 +112,7 @@ class WysiwygEditor extends Component {
     }
     if (Object.keys(newState).length) this.setState(newState);
     this.editorProps = this.filterEditorProps(this.props);
-    this.customStyleMap = this.getStyleMap(this.props);
+    this.customStyleMap = this.getStyleMap(this.props, editorState);
   }
 
   onEditorBlur = () => {
@@ -331,10 +331,34 @@ class WysiwygEditor extends Component {
       "customStyleMap",
     ]);
 
-  getStyleMap = (props) => ({
-    ...getCustomStyleMap(),
-    ...props.customStyleMap,
-  });
+  getStyleMap = (props, editorState) => {
+    const styleMap = {
+      ...getCustomStyleMap(),
+      ...props.customStyleMap,
+    };
+    if (editorState) {
+      const styleList = editorState
+        .getCurrentContent()
+        .getBlockMap()
+        .map((block) => block.get("characterList"))
+        .toList()
+        .flatten();
+      styleList.forEach((style) => {
+        if (
+          style &&
+          style.indexOf("fontsize-") !== -1 &&
+          style.indexOf("em") !== -1
+        ) {
+          let styleValue = style.replace("fontsize-", "");
+          styleMap[style] = {
+            fontSize: styleValue,
+          };
+        }
+      });
+    }
+
+    return styleMap;
+  };
 
   changeEditorState = (contentState) => {
     const newContentState = convertFromRaw(contentState);
@@ -522,7 +546,7 @@ class WysiwygEditor extends Component {
             editorState={editorState}
             onChange={this.onChange}
             blockStyleFn={blockStyleFn}
-            customStyleMap={this.getStyleMap(this.props)}
+            customStyleMap={this.getStyleMap(this.props, editorState)}
             handleReturn={this.handleReturn}
             handlePastedText={this.handlePastedTextFn}
             blockRendererFn={this.blockRendererFn}

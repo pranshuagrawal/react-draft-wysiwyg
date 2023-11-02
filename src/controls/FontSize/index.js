@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 import {
   toggleCustomInlineStyle,
   getSelectionCustomInlineStyle,
-} from 'draftjs-utils';
+} from "draftjs-utils";
 
-import LayoutComponent from './Component';
+import LayoutComponent from "./Component";
 
 export default class FontSize extends Component {
   static propTypes = {
@@ -22,7 +22,7 @@ export default class FontSize extends Component {
     this.state = {
       expanded: undefined,
       currentFontSize: editorState
-        ? getSelectionCustomInlineStyle(editorState, ['FONTSIZE']).FONTSIZE
+        ? getSelectionCustomInlineStyle(editorState, ["FONTSIZE"]).FONTSIZE
         : undefined,
     };
     modalHandler.registerCallBack(this.expandCollapse);
@@ -33,7 +33,7 @@ export default class FontSize extends Component {
     if (editorState && editorState !== prevProps.editorState) {
       this.setState({
         currentFontSize: getSelectionCustomInlineStyle(editorState, [
-          'FONTSIZE',
+          "FONTSIZE",
         ]).FONTSIZE,
       });
     }
@@ -67,9 +67,9 @@ export default class FontSize extends Component {
     });
   };
 
-  toggleFontSize = fontSize => {
+  toggleFontSize = (fontSize) => {
     const { editorState, onChange } = this.props;
-    const newState = toggleCustomInlineStyle(editorState, 'fontSize', fontSize);
+    const newState = toggleCustomInlineStyle(editorState, "fontSize", fontSize);
     if (newState) {
       onChange(newState);
     }
@@ -79,7 +79,13 @@ export default class FontSize extends Component {
     const { config, translations } = this.props;
     const { expanded, currentFontSize } = this.state;
     const FontSizeComponent = config.component || LayoutComponent;
-    const fontSize = currentFontSize && Number(currentFontSize.substring(9));
+    // const fontSize = currentFontSize && Number(currentFontSize.substring(9));
+    let fontSize = 14;
+    if (currentFontSize) {
+      fontSize = currentFontSize.replace("fontsize-", "");
+      fontSize = fontSize.replace("em", "");
+      fontSize = Math.round(+fontSize * 14);
+    }
     return (
       <FontSizeComponent
         config={config}

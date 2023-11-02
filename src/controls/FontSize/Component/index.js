@@ -55,11 +55,13 @@ export default class LayoutComponent extends Component {
     let {
       currentState: { fontSize: currentFontSize },
     } = this.props;
+
     let { defaultFontSize } = this.state;
     defaultFontSize = Number(defaultFontSize);
     currentFontSize =
       currentFontSize ||
       (_options && _options.indexOf(defaultFontSize) >= 0 && defaultFontSize);
+
     return (
       <div className="rdw-fontsize-wrapper" aria-label="rdw-font-size-control">
         <Dropdown
@@ -81,7 +83,7 @@ export default class LayoutComponent extends Component {
             <DropdownOption
               className="rdw-fontsize-option"
               active={currentFontSize === size}
-              value={size}
+              value={size / 14 + "em"}
               key={index}
             >
               {size}
