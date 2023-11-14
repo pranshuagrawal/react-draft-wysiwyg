@@ -50,7 +50,8 @@ export default class LayoutComponent extends Component {
       translations,
     } = this.props;
     const _options = [
-      6, 7, 8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 44, 48, 60, 72, 96,
+      6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60,
+      66, 72, 78, 84, 90, 96,
     ];
     let {
       currentState: { fontSize: currentFontSize },

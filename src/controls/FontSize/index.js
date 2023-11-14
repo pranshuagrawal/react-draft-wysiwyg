@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {
   toggleCustomInlineStyle,
   getSelectionCustomInlineStyle,
+  getCurrentInlineStyle,
 } from "draftjs-utils";
 
 import LayoutComponent from "./Component";
@@ -81,6 +82,7 @@ export default class FontSize extends Component {
     const FontSizeComponent = config.component || LayoutComponent;
     // const fontSize = currentFontSize && Number(currentFontSize.substring(9));
     let fontSize = 14;
+
     if (currentFontSize) {
       fontSize = currentFontSize.replace("fontsize-", "");
       fontSize = fontSize.replace("em", "");
