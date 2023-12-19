@@ -37,6 +37,9 @@ export default class LayoutComponent extends Component {
         defaultFontSize,
       });
     }
+
+    const { onChange } = this.props;
+    onChange("2em");
   }
 
   render() {
