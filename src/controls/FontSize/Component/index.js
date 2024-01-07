@@ -40,6 +40,7 @@ export default class LayoutComponent extends Component {
 
     const { onChange } = this.props;
     onChange("2em");
+    onChange("1.4285714285714286em");
   }
 
   render() {
