@@ -8,6 +8,7 @@ import {
   convertFromRaw,
   CompositeDecorator,
   getDefaultKeyBinding,
+  DefaultDraftBlockRenderMap,
 } from "draft-js";
 import {
   changeDepth,
@@ -59,6 +60,10 @@ class WysiwygEditor extends Component {
     this.compositeDecorator = this.getCompositeDecorator(toolbar);
     const editorState = this.createEditorState(this.compositeDecorator);
     this.customStyleMap = this.getStyleMap(props, editorState);
+    this.extendedBlockRenderMap = props.blockRenderMap
+      ? DefaultDraftBlockRenderMap.merge(props.blockRenderMap)
+      : blockRenderMap;
+
     extractInlineStyle(editorState);
     this.state = {
       editorState,
@@ -552,7 +557,7 @@ class WysiwygEditor extends Component {
             blockRendererFn={this.blockRendererFn}
             handleKeyCommand={this.handleKeyCommand}
             ariaLabel={ariaLabel || "rdw-editor"}
-            blockRenderMap={blockRenderMap}
+            blockRenderMap={this.extendedBlockRenderMap}
             {...this.editorProps}
           />
         </div>
